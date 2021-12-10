@@ -1,7 +1,3 @@
-
-// load envirements variables
-require('dotenv').config()
-// import required libraries
 const express = require("express")
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
