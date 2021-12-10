@@ -1,4 +1,6 @@
 
+// load envirements variables
+require('dotenv').config()
 // import required libraries
 const express = require("express")
 const bodyParser = require('body-parser');
@@ -6,9 +8,11 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 
 // Load controllers
-const Login = require('./controller/login');
-const Register = require('./controller/register');
+const Login = require('./controller/auth/login');
+const Register = require('./controller/auth/register');
 const SpeechController = require('./controller/speech_controller');
+
+const PORT = 3000
 
 // initialize the express app
 const app = express();
@@ -17,7 +21,8 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
- 
+
+
 // Auth middleware
 const authorization = (req, res, next) => {
     const token = req.cookies.access_token;
@@ -25,7 +30,7 @@ const authorization = (req, res, next) => {
         return res.sendStatus(403);
     }
     try {
-        const data = jwt.verify(token, 'secretKey');
+        const data = jwt.verify(token, "secretKey");
         req.user_id = data.id;
         req.username = data.username;
         return next();
@@ -52,6 +57,6 @@ app.get("/logout", authorization, (req, res) => {
 
 // run application listening on port from .env file 
 // @param {number} port
-app.listen(8000, () =>
-    console.log(`Example app listening on port 5001!`),
+app.listen(PORT, () =>
+    console.log(`Example app listening on port ${PORT}!`),
 );
