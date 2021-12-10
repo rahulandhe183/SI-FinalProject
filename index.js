@@ -4,8 +4,8 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 
 // Load controllers
-const Login = require('./controller/auth/login');
-const Register = require('./controller/auth/register');
+const Login = require('./controller/login');
+const Register = require('./controller/register');
 const SpeechController = require('./controller/speech_controller');
 
 const PORT = 3000
