@@ -43,17 +43,15 @@ class Register {
                     // create the user
                     self.db.run('INSERT INTO user (username, password) VALUES (?,?)', [req.body.username, md5(req.body.password)], function (err, result) {
                         if (err) {
-                            self.status = 400
-                            self.response.message = err.message
-                            self.writeResponse(res)
+                            // self.status = 400
+                            // self.response.message = err.message
+                            res.status(400).json(err.message);
                         } else {
-                            self.writeResponse(res)
+                            res.status(this.status).json(this.response);
                         }
                     });
                 } else {
-                    self.status = 400
-                    self.response.message = "username already exists"
-                    self.writeResponse(res)
+                    res.status(400).json("username already exists");
                 }
             });
 
